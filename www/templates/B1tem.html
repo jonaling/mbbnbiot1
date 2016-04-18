@@ -1,0 +1,41 @@
+<ion-view view-title={{level}}>
+  <ion-content class="padding">
+    <h2 id= "center">MBB</h2>
+    <div class="row">
+  <div class="col col-33 boxed"><div ng-bind-html="m1"></div></div>
+  <div class="col col-33 boxed"><img  class= " placehold" src= '../Misc/car.png' /><div ng-bind-html="m2"></div></div>
+  <div class="col col-33 boxed"><div ng-bind-html="m3"></div></div>
+</div>
+  <h2 id= "center">NB-IoT</h2>
+     <div class="row">
+  <div class="col col-33 boxed"><div ng-bind-html="n1"></div></div>
+  <div class="col col-33 boxed"><img class= " placehold" src= '../Misc/car.png' /><div ng-bind-html="n2"></div></div>
+  <div class="col col-33 boxed"><div ng-bind-html="n3"></div></div>
+</div>
+
+
+<!-- Debug test-->
+<div class="list">
+  <div class="item item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Code" ng-model="code.number">
+    </label>
+    <button class="button button-small" ng-click = "update(code)">
+      Submit
+    </button>
+  </div>
+  <div class= "textbox">{{master.number}}</div>
+
+</div>
+
+<div class="list">
+  <div class="item item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Floor number" ng-model="num">
+    </label>
+    <button class="button button-small" ng-click = "floor(num)">
+      Submit
+    </button>
+   
+  </ion-content>
+</ion-view>
