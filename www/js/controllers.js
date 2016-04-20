@@ -1,30 +1,45 @@
 angular.module('starter.controllers', ['ngSanitize', 'ngStorage'])
 
 .factory("LS", function($window, $rootScope) {
-
   angular.element($window).on('storage', function(event) {
-    if (event.key === 'my-storage') {
+    if (event.key === 'Mb') {
+      $rootScope.$apply();
+    }
+      if (event.key === 'Nb') {
+      $rootScope.$apply();
+    }
+      if (event.key === 'Fr') {
       $rootScope.$apply();
     }
   });
   return {
-    setData: function(val) {
-      $window.localStorage && $window.localStorage.setItem('my-storage', val);
+    setDataMb: function(val) {
+      $window.localStorage && $window.localStorage.setItem('Mb', val);
       return this;
     },
-    getData: function() {
-      return $window.localStorage && $window.localStorage.getItem('my-storage');
+    getDataMb: function() {
+      return $window.localStorage && $window.localStorage.getItem('Mb');
+    },
+      setDataNb: function(val) {
+      $window.localStorage && $window.localStorage.setItem('Nb', val);
+      return this;
+    },
+    getDataNb: function() {
+      return $window.localStorage && $window.localStorage.getItem('Nb');
+    },
+      setDataFr: function(val) {
+      $window.localStorage && $window.localStorage.setItem('Fr', val);
+      return this;
+    },
+    getDataFr: function() {
+      return $window.localStorage && $window.localStorage.getItem('Fr');
     }
   };
 })
 
-.controller('B1Ctrl', ['$scope', '$sce', function($scope, $sce,$localStorage, $sessionStorage, $log, LS) {
+.controller('B1Ctrl',function($scope, $sce,$log,$localStorage,$sessionStorage,LS) {
   $scope.master = {};
   $scope.level="MBB vs. NB-IoT";
-
-
-
-
 
 function getUrlVars() {
 var vars = {};
@@ -33,21 +48,70 @@ vars[key] = value;
 });
 return vars;
 }
-  
-  $scope.elevation="B"+ getUrlVars()["floor"];
+
+ LS.setDataFr("B"+getUrlVars()["floor"]); 
+  $scope.elevation=LS.getDataFr();
   $scope.stats= ""+getUrlVars()["status"];
 
   function autoUp(stats){
    
 
     if (stats[0] == 0) {
-        
+        LS.setDataMb(stats);
 
-        if (stats[1] == 1) {
+        if (LS.getDataMb()[1] == 1) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m1 = some1;
-        } else if (stats[1] == 3) {
+        } else if (LS.getDataMb()[1] == 3) {
+
+          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
+          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
+          $scope.m1 = some1;
+        } else {
+          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
+          $scope.m1 = some1;
+        }
+
+        $log.log(LS.getDataMb()[2]);
+
+        if (LS.getDataMb()[2] == 1) {
+          // $scope.master.m1= '<img class= \"overlay\" src= \'../Misc/car.png\' /> ';
+
+
+          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
+          $scope.m2 = some2;
+        } else if (LS.getDataMb()[2] == 3) {
+
+          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
+          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
+          $scope.m2 = some2;
+        } else {
+          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
+          $scope.m2 = some2;
+        }
+
+        if (LS.getDataMb()[3] == 1) {
+          // $scope.master.m1= '<img class= \"overlay\" src= \'../Misc/car.png\' /> ';
+
+
+          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
+          $scope.m3 = some3;
+        } else if (LS.getDataMb()[3] == 3) {
+
+          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
+          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
+          $scope.m3 = some3;
+        } else {
+          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
+          $scope.m3 = some3;
+        }
+     //  LS.getDataNb()
+   if ( LS.getDataNb()[1] == 1) {
+
+          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
+          $scope.m1 = some1;
+        } else if ( LS.getDataNb()[1] == 3) {
 
           //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
@@ -59,13 +123,13 @@ return vars;
 
 
 
-        if (stats[2] == 1) {
+        if ( LS.getDataNb()[2] == 1) {
           // $scope.master.m1= '<img class= \"overlay\" src= \'../Misc/car.png\' /> ';
 
 
           var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m2 = some2;
-        } else if (stats[2] == 3) {
+        } else if ( LS.getDataNb()[2] == 3) {
 
           //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
           var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
@@ -75,13 +139,13 @@ return vars;
           $scope.m2 = some2;
         }
 
-        if (stats[3] == 1) {
+        if ( LS.getDataNb()[3] == 1) {
           // $scope.master.m1= '<img class= \"overlay\" src= \'../Misc/car.png\' /> ';
 
 
           var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m3 = some3;
-        } else if (stats[3] == 3) {
+        } else if ( LS.getDataNb()[3] == 3) {
 
           //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
           var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
@@ -90,7 +154,6 @@ return vars;
           var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
           $scope.m3 = some3;
         }
-     
 
 
       } else {
@@ -270,4 +333,4 @@ $scope.floor= function(num){
 $scope.level = angular.copy(num);
 };
 
-}]);
+});
