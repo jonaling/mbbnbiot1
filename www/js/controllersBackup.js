@@ -1,30 +1,20 @@
-angular.module('starter.controllers', ['ngSanitize', 'ngStorage'])
+angular.module('starter.controllersBackup', ['ngSanitize', 'ngStorage'])
 
-.factory("LS", function($window, $rootScope) {
-
-  angular.element($window).on('storage', function(event) {
-    if (event.key === 'my-storage') {
-      $rootScope.$apply();
-    }
-  });
-  return {
-    setData: function(val) {
-      $window.localStorage && $window.localStorage.setItem('my-storage', val);
-      return this;
+.factory('localstorage',function($window){
+  return{
+    set: function(id,value){
+      $window.localstorage[id]=value;
     },
-    getData: function() {
-      return $window.localStorage && $window.localStorage.getItem('my-storage');
+    get: function(id){
+      return $window.localstorage[id];
     }
   };
 })
 
-.controller('B1Ctrl', ['$scope', '$sce', function($scope, $sce,$localStorage, $sessionStorage, $log, LS) {
+.controller('B1Ctrl', ['$scope', '$sce', function($scope, $sce,$localStorage,
+    $sessionStorage) {
   $scope.master = {};
   $scope.level="MBB vs. NB-IoT";
-
-
-
-
 
 function getUrlVars() {
 var vars = {};

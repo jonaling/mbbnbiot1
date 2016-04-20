@@ -1,6 +1,17 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
+.factory('localstorage',function($window){
+  return{
+    set: function(id,value){
+      $window.localstorage[id]=value;
+    },
+    get: function(id){
+      return $window.localstorage[id];
+    }
+  };
+})
+
+.factory('Chats', function($q,$log,localstorage) {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
