@@ -6,13 +6,8 @@ angular.module('starter.controllers', ['ngSanitize', 'ngStorage'])
   $scope.stats= ""+getUrlVars()["status"];
   //to do:
   //$scope.elevation= $scope.$storage.fl;
-//$localStorage.stor=[];
-$scope.test=function(){
-var deferred = $q.defer(function(){storUp($scope.level,$scope.stats,$localStorage.stor)});
 
-var promise= deferred.promise.then(function(){$interval(function(){releaseStor($scope,$localStorage);}, 5000)});
 
-};
  function storUp(level,stats,stor){
   if (stor != undefined){
   $log.log(level);  
@@ -36,20 +31,27 @@ var promise= deferred.promise.then(function(){$interval(function(){releaseStor($
   }
 $log.log("stor:"+ stor);
 } else{
- stor =[0,0,0,0,0,0,0];
+ stor =[];
 }
+$interval(function(){releaseStor($scope,$localStorage);}, 5000);
  }
 
 function releaseStor($scope,$localStorage){
-
+try{
   $scope.elevation = "B"+$localStorage.stor[0]  ;
   $log.log($scope.elevation);
+}catch(e){
+   $scope.elevation="MBB vs NB-IOT";
+   $localStorage.stor=[0,0,0,0,0,0,0];
+}
+
+try{
 //m1
-        if ($localStorage.stor[1] == 1) {
+        if ($localStorage.stor[1] == 1 ) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m1 = some1;
-        } else if ($localStorage.stor[1] == 3) {
+        } else if ($localStorage.stor[1] == 3&& $localStorage.stor[1] != undefined) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.m1 = some1;
@@ -58,11 +60,11 @@ function releaseStor($scope,$localStorage){
           $scope.m1 = some1;
         }
 //m2
-        if ($localStorage.stor[2] == 1) {
+        if ($localStorage.stor[2] == 1 ) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m2 = some1;
-        } else if ($localStorage.stor[2] == 3) {
+        } else if ($localStorage.stor[2] == 3 && $localStorage.stor[2] != undefined) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.m2 = some1;
@@ -71,11 +73,11 @@ function releaseStor($scope,$localStorage){
           $scope.m2 = some1;
         }    
 //m3
-         if ($localStorage.stor[3] == 1) {
+         if ($localStorage.stor[3] == 1 ) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m3 = some1;
-        } else if ($localStorage.stor[3] == 3) {
+        } else if ($localStorage.stor[3] == 3&& $localStorage.stor[3] != undefined) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.m3 = some1;
@@ -83,12 +85,20 @@ function releaseStor($scope,$localStorage){
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
           $scope.m3 = some1;
         }
+      }catch(e){
+         var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
+          $scope.m1 = some1;
+          $scope.m2 = some1;
+          $scope.m3 = some1;
+      }
+
+      try{
 //n1
-        if ($localStorage.stor[4] == 1) {
+        if ($localStorage.stor[4] == 1 ) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.n1 = some1;
-        } else if ($localStorage.stor[4] == 3) {
+        } else if ($localStorage.stor[4] == 3 && $localStorage.stor[4] != undefined) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.n1 = some1;
@@ -97,11 +107,11 @@ function releaseStor($scope,$localStorage){
           $scope.n1 = some1;
         }
 //n2
-        if ($localStorage.stor[5] == 1) {
+        if ($localStorage.stor[5] == 1 ) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.n2 = some1;
-        } else if ($localStorage.stor[5] == 3) {
+        } else if ($localStorage.stor[5] == 3 && $localStorage.stor[5] != undefined ) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.n2 = some1;
@@ -110,11 +120,11 @@ function releaseStor($scope,$localStorage){
           $scope.n2 = some1;
         }
 //n3
-        if ($localStorage.stor[6] == 1) {
+        if ($localStorage.stor[6] == 1 ) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.n3 = some1;
-        } else if ($localStorage.stor[6] == 3) {
+        } else if ($localStorage.stor[6] == 3 && $localStorage.stor[5] != undefined) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.n3 = some1;
@@ -122,6 +132,12 @@ function releaseStor($scope,$localStorage){
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
           $scope.n3 = some1;
         }
+      }catch(e){
+               var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
+          $scope.n1 = some1;
+          $scope.n2 = some1;
+          $scope.n3 = some1;
+      }
 
   //$log.log("5 seconds");
 
@@ -131,7 +147,7 @@ function releaseStor($scope,$localStorage){
   }*/
 }
 
-//storUp($scope.level,$scope.stats,$localStorage.stor);
+storUp($scope.level,$scope.stats,$localStorage.stor);
 //$interval(function(){releaseStor($scope,$localStorage);}, 5000);
 
 
