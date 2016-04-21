@@ -1,132 +1,45 @@
 angular.module('starter.controllers', ['ngSanitize', 'ngStorage'])
 
-.controller('B1Ctrl', function($scope, $sce, $localStorage, $log,$interval ) {
+.factory("LS", function($window, $rootScope) {
+  angular.element($window).on('storage', function(event) {
+    if (event.key === 'Mb') {
+      $rootScope.$apply();
+    }
+      if (event.key === 'Nb') {
+      $rootScope.$apply();
+    }
+      if (event.key === 'Fr') {
+      $rootScope.$apply();
+    }
+  });
+  return {
+    setDataMb: function(val) {
+      $window.localStorage && $window.localStorage.setItem('Mb', val);
+      return this;
+    },
+    getDataMb: function() {
+      return $window.localStorage && $window.localStorage.getItem('Mb');
+    },
+      setDataNb: function(val) {
+      $window.localStorage && $window.localStorage.setItem('Nb', val);
+      return this;
+    },
+    getDataNb: function() {
+      return $window.localStorage && $window.localStorage.getItem('Nb');
+    },
+      setDataFr: function(val) {
+      $window.localStorage && $window.localStorage.setItem('Fr', val);
+      return this;
+    },
+    getDataFr: function() {
+      return $window.localStorage && $window.localStorage.getItem('Fr');
+    }
+  };
+})
+
+.controller('B1Ctrl',function($scope, $sce,$log,$localStorage,$sessionStorage,LS) {
   $scope.master = {};
-  $scope.level=""+ getUrlVars()["floor"];
-  $scope.stats= ""+getUrlVars()["status"];
-  //to do:
-  //$scope.elevation= $scope.$storage.fl;
-//$localStorage.stor=[];
-
-
- function storUp(level,stats,stor){
-  $log.log(level);
-  $log.log("B:" +stor);
-
-  stor[0]= level;
-
-
-  $log.log("A:" + stor);
-  $log.log("i=4:"+ $localStorage.stor[4]);
-  if(stats[0]==0){
-    for(var i=1;i<4;i++){
-      $localStorage.stor[i]=stats[i];
-    }
-  }else if(stats[0]==1){
-    for(var i=1;i<4;i++){
-      $localStorage.stor[i+3]=stats[i];
-    }
-  }else{
-
-  }
-$log.log("stor:"+ stor);
- }
-
-function releaseStor($scope,$localStorage){
-
-  $scope.elevation = "B"+$localStorage.stor[0]  ;
-  $log.log($scope.elevation);
-//m1
-        if ($localStorage.stor[1] == 1) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.m1 = some1;
-        } else if ($localStorage.stor[1] == 3) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.m1 = some1;
-        } else {
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.m1 = some1;
-        }
-//m2
-        if ($localStorage.stor[2] == 1) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.m2 = some1;
-        } else if ($localStorage.stor[2] == 3) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.m2 = some1;
-        } else {
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.m2 = some1;
-        }    
-//m3
-         if ($localStorage.stor[3] == 1) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.m3 = some1;
-        } else if ($localStorage.stor[3] == 3) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.m3 = some1;
-        } else {
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.m3 = some1;
-        }
-//n1
-        if ($localStorage.stor[4] == 1) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.n1 = some1;
-        } else if ($localStorage.stor[4] == 3) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.n1 = some1;
-        } else {
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.n1 = some1;
-        }
-//n2
-        if ($localStorage.stor[5] == 1) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.n2 = some1;
-        } else if ($localStorage.stor[5] == 3) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.n2 = some1;
-        } else {
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.n2 = some1;
-        }
-//n3
-        if ($localStorage.stor[6] == 1) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.n3 = some1;
-        } else if ($localStorage.stor[6] == 3) {
-
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.n3 = some1;
-        } else {
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.n3 = some1;
-        }
-
-  //$log.log("5 seconds");
-
-
-  /*for(var i=1;i<4;i++){
-
-  }*/
-}
-
-storUp($scope.level,$scope.stats,$localStorage.stor);
-$interval(function(){releaseStor($scope,$localStorage);}, 5000);
-
-
+  $scope.level="MBB vs. NB-IoT";
 
 function getUrlVars() {
 var vars = {};
@@ -135,22 +48,72 @@ vars[key] = value;
 });
 return vars;
 }
-  
 
- 
-/*
+ LS.setDataFr("B"+getUrlVars()["floor"]); 
+  $scope.elevation=LS.getDataFr();
+  $scope.stats= ""+getUrlVars()["status"];
+
   function autoUp(stats){
    
 
     if (stats[0] == 0) {
-      $localStorage.mb = stats;
+        LS.setDataMb(stats);
 
-        if ($localStorage.mb[1] == 1) {
+        if (LS.getDataMb()[1] == 1) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m1 = some1;
-        } else if ($localStorage.mb[1] == 3) {
+        } else if (LS.getDataMb()[1] == 3) {
 
+          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
+          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
+          $scope.m1 = some1;
+        } else {
+          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
+          $scope.m1 = some1;
+        }
+
+        $log.log(LS.getDataMb()[2]);
+
+        if (LS.getDataMb()[2] == 1) {
+          // $scope.master.m1= '<img class= \"overlay\" src= \'../Misc/car.png\' /> ';
+
+
+          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
+          $scope.m2 = some2;
+        } else if (LS.getDataMb()[2] == 3) {
+
+          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
+          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
+          $scope.m2 = some2;
+        } else {
+          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
+          $scope.m2 = some2;
+        }
+
+        if (LS.getDataMb()[3] == 1) {
+          // $scope.master.m1= '<img class= \"overlay\" src= \'../Misc/car.png\' /> ';
+
+
+          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
+          $scope.m3 = some3;
+        } else if (LS.getDataMb()[3] == 3) {
+
+          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
+          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
+          $scope.m3 = some3;
+        } else {
+          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
+          $scope.m3 = some3;
+        }
+     //  LS.getDataNb()
+   if ( LS.getDataNb()[1] == 1) {
+
+          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
+          $scope.m1 = some1;
+        } else if ( LS.getDataNb()[1] == 3) {
+
+          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.m1 = some1;
         } else {
@@ -160,13 +123,15 @@ return vars;
 
 
 
-        if ($localStorage.mb[2] == 1) {
+        if ( LS.getDataNb()[2] == 1) {
+          // $scope.master.m1= '<img class= \"overlay\" src= \'../Misc/car.png\' /> ';
+
 
           var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m2 = some2;
-        } else if ($localStorage.mb[2] == 3) {
+        } else if ( LS.getDataNb()[2] == 3) {
 
-
+          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
           var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.m2 = some2;
         } else {
@@ -174,11 +139,13 @@ return vars;
           $scope.m2 = some2;
         }
 
-        if ($localStorage.mb[3] == 1) {
+        if ( LS.getDataNb()[3] == 1) {
+          // $scope.master.m1= '<img class= \"overlay\" src= \'../Misc/car.png\' /> ';
+
 
           var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m3 = some3;
-        } else if ($localStorage.mb[3] == 3) {
+        } else if ( LS.getDataNb()[3] == 3) {
 
           //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
           var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
@@ -187,53 +154,17 @@ return vars;
           var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
           $scope.m3 = some3;
         }
-     
-        //
-        var tats= $localStorage.nb
-        if (tats[1] == 1) {
 
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.n1 = some1;
-        } else if (tats[1] == 3) {
-
-          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.n1 = some1;
-        } else {
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.n1 = some1;
-        }
-
-
-
-        if (tats[2] == 1) {
-          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.n2 = some2;
-        } else if (tats[2] == 3) {
-          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.n2 = some2;
-        } else {
-          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.n2 = some2;
-        }
-
-        if (tats[3] == 1) {
-          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.n3 = some3;
-        } else if (tats[3] == 3) {
-          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.n3 = some3;
-        } else {
-          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.n3 = some3;
-        }
 
       } else {
-          $localStorage.nb = stats;
+
         if (stats[1] == 1) {
+
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.n1 = some1;
         } else if (stats[1] == 3) {
+
+          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.n1 = some1;
         } else {
@@ -244,9 +175,14 @@ return vars;
 
 
         if (stats[2] == 1) {
+          // $scope.master.m1= '<img class= \"overlay\" src= \'../Misc/car.png\' /> ';
+
+
           var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.n2 = some2;
         } else if (stats[2] == 3) {
+
+          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
           var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.n2 = some2;
         } else {
@@ -255,57 +191,24 @@ return vars;
         }
 
         if (stats[3] == 1) {
+          // $scope.master.m1= '<img class= \"overlay\" src= \'../Misc/car.png\' /> ';
+
+
           var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.n3 = some3;
         } else if (stats[3] == 3) {
+
+          //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
           var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.n3 = some3;
         } else {
           var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
           $scope.n3 = some3;
-        }
-        //
-        var tats= $localStorage.mb;
-         if (tats[1] == 1) {
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.m1 = some1;
-        } else if (tats[1] == 3) {
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.m1 = some1;
-        } else {
-          var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.m1 = some1;
-        }
-
-
-
-        if (tats[2] == 1) {
-          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.m2 = some2;
-        } else if (tats[2] == 3) {
-          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.m2 = some2;
-        } else {
-          var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.m2 = some2;
-        }
-
-        if (tats[3] == 1) {
-          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
-          $scope.m3 = some3;
-        } else if (tats[3] == 3) {
-          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
-          $scope.m3 = some3;
-        } else {
-          var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/concrete1.jpg\' /> ');
-          $scope.m3 = some3;
         }
       }
 
-  }*/
-
-
-
+  }
+ autoUp($scope.stats);
 
   $scope.update = function(code) {
     $scope.master = angular.copy(code);

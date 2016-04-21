@@ -1,6 +1,6 @@
-angular.module('starter.controllers1', ['ngSanitize', 'ngStorage'])
+angular.module('starter.controllersas', ['ngSanitize', 'ngStorage'])
 
-.controller('B1Ctrl', function($scope, $sce, $localStorage, $log ) {
+.controller('B1Ctrl', function($scope, $sce, $localStorage, $log,$interval ) {
   $scope.master = {};
   $scope.level="B"+ getUrlVars()["floor"];
 
@@ -30,11 +30,11 @@ return vars;
     if (stats[0] == 0) {
       $localStorage.mb = stats;
 
-        if (stats[1] == 1) {
+        if ($localStorage.mb[1] == 1) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m1 = some1;
-        } else if (stats[1] == 3) {
+        } else if ($localStorage.mb[1] == 3) {
 
           var some1 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
           $scope.m1 = some1;
@@ -45,11 +45,11 @@ return vars;
 
 
 
-        if (stats[2] == 1) {
+        if ($localStorage.mb[2] == 1) {
 
           var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m2 = some2;
-        } else if (stats[2] == 3) {
+        } else if ($localStorage.mb[2] == 3) {
 
 
           var some2 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
@@ -59,11 +59,11 @@ return vars;
           $scope.m2 = some2;
         }
 
-        if (stats[3] == 1) {
+        if ($localStorage.mb[3] == 1) {
 
           var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/car.png\' /> ');
           $scope.m3 = some3;
-        } else if (stats[3] == 3) {
+        } else if ($localStorage.mb[3] == 3) {
 
           //$scope.master.m1= '<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ';
           var some3 = $sce.trustAsHtml('<img class= \"overlay\" src= \'../Misc/disconnection.png\' /> ');
@@ -188,12 +188,9 @@ return vars;
       }
 
   }
- autoUp($scope.stats);
+$interval(autoUp($scope.stats), 5000);
 
-function timeRep(){
-  autoUp($scope.stats);
 
-}
 
   $scope.update = function(code) {
     $scope.master = angular.copy(code);
