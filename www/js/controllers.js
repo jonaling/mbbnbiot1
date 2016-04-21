@@ -1,16 +1,21 @@
 angular.module('starter.controllers', ['ngSanitize', 'ngStorage'])
 
-.controller('B1Ctrl', function($scope, $sce, $localStorage, $log,$interval ) {
+.controller('B1Ctrl', function($q,$scope, $sce, $localStorage, $log,$interval ) {
   $scope.master = {};
   $scope.level=""+ getUrlVars()["floor"];
   $scope.stats= ""+getUrlVars()["status"];
   //to do:
   //$scope.elevation= $scope.$storage.fl;
 //$localStorage.stor=[];
+$scope.test=function(){
+var deferred = $q.defer(function(){storUp($scope.level,$scope.stats,$localStorage.stor)});
 
+var promise= deferred.promise.then(function(){$interval(function(){releaseStor($scope,$localStorage);}, 5000)});
 
+};
  function storUp(level,stats,stor){
-  $log.log(level);
+  if (stor != undefined){
+  $log.log(level);  
   $log.log("B:" +stor);
 
   stor[0]= level;
@@ -30,6 +35,9 @@ angular.module('starter.controllers', ['ngSanitize', 'ngStorage'])
 
   }
 $log.log("stor:"+ stor);
+} else{
+ stor =[0,0,0,0,0,0,0];
+}
  }
 
 function releaseStor($scope,$localStorage){
@@ -123,8 +131,8 @@ function releaseStor($scope,$localStorage){
   }*/
 }
 
-storUp($scope.level,$scope.stats,$localStorage.stor);
-$interval(function(){releaseStor($scope,$localStorage);}, 5000);
+//storUp($scope.level,$scope.stats,$localStorage.stor);
+//$interval(function(){releaseStor($scope,$localStorage);}, 5000);
 
 
 
